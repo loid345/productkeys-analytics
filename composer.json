@@ -1,0 +1,18 @@
+{
+    "name": "dart/productkeys-analytics",
+    "description": "Dart Product Keys Analytics module for Magento 2",
+    "require": {
+        "php": ">=7.3"
+    },
+    "type": "magento2-module",
+    "version": "0.1.0",
+    "license": ["OSL-3.0", "AFL-3.0"],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Dart\\ProductkeysAnalytics\\": ""
+        }
+    }
+}
