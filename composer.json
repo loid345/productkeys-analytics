@@ -14,5 +14,12 @@
         "psr-4": {
             "Dart\\ProductkeysAnalytics\\": ""
         }
+    },
+    "scripts": {
+        "lint": "find . -name \"*.php\" -not -path \"./vendor/*\" -print0 | xargs -0 -n1 php -l",
+        "ci": [
+            "@lint",
+            "composer validate --no-check-publish"
+        ]
     }
 }
