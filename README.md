@@ -1,9 +1,5 @@
 # Dart_ProductkeysAnalytics
 
-**Version:** 0.1.0  
-**Magento 2.x**  
-**Author:** Dart Team  
-**Dependency:** requires the `Dart_Productkeys` module
 
 ## 📌 Purpose
 
@@ -84,7 +80,7 @@ GAME-001  | Game License  | 100        | 45   | 55
 ## ✅ Requirements
 
 - Magento 2.4.x
-- PHP >= 7.3
+- PHP >= 8.3
 - Installed `Dart_Productkeys` module
 
 ## 🛠 Access permissions
