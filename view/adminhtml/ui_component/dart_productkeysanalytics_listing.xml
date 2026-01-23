@@ -16,6 +16,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="pageSize" xsi:type="number">20</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="indexField" xsi:type="string">sku</item>
                     </item>
@@ -46,7 +47,15 @@
             </filterDateRange>
         </filters>
         <chips name="chips"/>
-        <paging name="listing_paging"/>
+        <paging name="listing_paging">
+            <settings>
+                <options>
+                    <option name="20" xsi:type="number">20</option>
+                    <option name="50" xsi:type="number">50</option>
+                    <option name="100" xsi:type="number">100</option>
+                </options>
+            </settings>
+        </paging>
         <exportButton name="export_button"/>
     </listingToolbar>
     <listingToolbar name="listing_bottom">
@@ -70,7 +79,6 @@
             <settings>
                 <label translate="true">Total Keys</label>
                 <filter>text</filter>
-                <sortable>false</sortable>
                 <totalsLabel translate="true">Totals</totalsLabel>
             </settings>
         </column>
@@ -78,14 +86,12 @@
             <settings>
                 <label translate="true">Sold</label>
                 <filter>text</filter>
-                <sortable>false</sortable>
             </settings>
         </column>
         <column name="free_keys">
             <settings>
                 <label translate="true">Free</label>
                 <filter>text</filter>
-                <sortable>false</sortable>
             </settings>
         </column>
     </columns>
