@@ -24,6 +24,8 @@
         </argument>
     </dataSource>
     <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
         <filters name="listing_filters">
             <filterInput name="sku">
                 <settings>
@@ -42,6 +44,7 @@
                 </settings>
             </filterDateRange>
         </filters>
+        <paging name="listing_paging"/>
         <exportButton name="export_button"/>
     </listingToolbar>
     <columns name="dart_productkeysanalytics_columns">
