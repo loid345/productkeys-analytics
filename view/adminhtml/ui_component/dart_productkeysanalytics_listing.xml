@@ -26,6 +26,7 @@
     <listingToolbar name="listing_top">
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
         <filters name="listing_filters">
             <filterInput name="sku">
                 <settings>
@@ -44,8 +45,12 @@
                 </settings>
             </filterDateRange>
         </filters>
+        <chips name="chips"/>
         <paging name="listing_paging"/>
         <exportButton name="export_button"/>
+    </listingToolbar>
+    <listingToolbar name="listing_bottom">
+        <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="dart_productkeysanalytics_columns">
         <column name="sku">
