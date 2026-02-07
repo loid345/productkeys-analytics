@@ -43,16 +43,14 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $productEntityTable = $this->resourceConnection->getTableName('catalog_product_entity');
         $eavAttributeTable = $this->resourceConnection->getTableName('eav_attribute');
         $productVarcharTable = $this->resourceConnection->getTableName('catalog_product_entity_varchar');
-        $salesOrderTable = $this->resourceConnection->getTableName('sales_order');
-
         $select = $connection->select()
             ->from(
                 ['pk' => $productkeysTable],
                 [
                     'sku' => 'pk.sku',
-                    'total_keys' => 'COUNT(pk.entity_id)',
-                    'sold_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 0 ELSE 1 END)',
-                    'free_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 1 ELSE 0 END)'
+                    'total_keys' => 'COUNT(*)',
+                    'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
                 ]
             )
             ->joinLeft(
@@ -69,11 +67,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 ['pv' => $productVarcharTable],
                 'pv.attribute_id = ea.attribute_id AND pv.entity_id = p.entity_id AND pv.store_id = 0',
                 ['product_name' => 'pv.value']
-            )
-            ->joinLeft(
-                ['so' => $salesOrderTable],
-                'so.entity_id = pk.order_id',
-                []
             )
             ->group(['pk.sku', 'pv.value']);
 
@@ -102,7 +95,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $fieldMap = [
             'sku' => 'pk.sku',
             'product_name' => 'pv.value',
-            'order_date' => 'so.created_at'
+            'period' => 'pk.updated_at'
         ];
 
         if (!isset($fieldMap[$field])) {
@@ -111,7 +104,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $column = $fieldMap[$field];
 
-        if ($field === 'order_date') {
+        if ($field === 'period') {
             if ($conditionType === 'from') {
                 $select->where($column . ' >= ?', $value);
                 return;
