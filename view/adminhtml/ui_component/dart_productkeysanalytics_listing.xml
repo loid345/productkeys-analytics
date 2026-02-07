@@ -89,6 +89,7 @@
                 <label translate="true">Created At</label>
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
+                <filterVisible>true</filterVisible>
                 <visible>false</visible>
             </settings>
         </column>
