@@ -71,6 +71,9 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $items = $connection->fetchAll($select);
         $totals = $this->fetchTotals($connection, $productkeysTable);
+        if ($totals) {
+            $items[] = $totals;
+        }
         $totalRecords = $this->fetchTotalRecords($connection, $productkeysTable);
 
         $this->loadedData = [
