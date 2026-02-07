@@ -40,9 +40,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $connection = $this->resourceConnection->getConnection();
         $productkeysTable = $this->resourceConnection->getTableName('dart_productkeys');
-        $productEntityTable = $this->resourceConnection->getTableName('catalog_product_entity');
-        $eavAttributeTable = $this->resourceConnection->getTableName('eav_attribute');
-        $productVarcharTable = $this->resourceConnection->getTableName('catalog_product_entity_varchar');
         $select = $connection->select()
             ->from(
                 ['pk' => $productkeysTable],
@@ -53,22 +50,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
                     'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
                 ]
             )
-            ->joinLeft(
-                ['p' => $productEntityTable],
-                'p.sku = pk.sku',
-                []
-            )
-            ->joinLeft(
-                ['ea' => $eavAttributeTable],
-                "ea.attribute_code = 'name' AND ea.entity_type_id = p.entity_type_id",
-                []
-            )
-            ->joinLeft(
-                ['pv' => $productVarcharTable],
-                'pv.attribute_id = ea.attribute_id AND pv.entity_id = p.entity_id AND pv.store_id = 0',
-                ['product_name' => 'pv.value']
-            )
-            ->group(['pk.sku', 'pv.value']);
+            ->group(['pk.sku']);
 
         foreach ($this->filters as $filter) {
             $this->applyFilter($select, $filter);
@@ -94,7 +76,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $fieldMap = [
             'sku' => 'pk.sku',
-            'product_name' => 'pv.value',
             'period' => 'pk.updated_at'
         ];
 
@@ -127,7 +108,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
     {
         $totals = [
             'sku' => (string)__('Total'),
-            'product_name' => '',
             'total_keys' => 0,
             'sold_keys' => 0,
             'free_keys' => 0

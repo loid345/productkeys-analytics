@@ -39,11 +39,6 @@
                     <label translate="true">SKU</label>
                 </settings>
             </filterInput>
-            <filterInput name="product_name">
-                <settings>
-                    <label translate="true">Product Name</label>
-                </settings>
-            </filterInput>
             <filterDateRange name="period">
                 <settings>
                     <dataScope>period</dataScope>
@@ -72,12 +67,6 @@
                 <label translate="true">SKU</label>
                 <filter>text</filter>
                 <sorting>asc</sorting>
-            </settings>
-        </column>
-        <column name="product_name">
-            <settings>
-                <label translate="true">Product Name</label>
-                <filter>text</filter>
             </settings>
         </column>
         <column name="total_keys">
