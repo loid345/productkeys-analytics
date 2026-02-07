@@ -13,6 +13,9 @@ class AnalyticsDataProvider extends AbstractDataProvider
     private ResourceConnection $resourceConnection;
     private array $filters = [];
     private array $loadedData = [];
+    private int $currentPage = 1;
+    private int $pageSize = 20;
+    private array $orders = [];
 
     public function __construct(
         string $name,
@@ -57,16 +60,48 @@ class AnalyticsDataProvider extends AbstractDataProvider
             $this->applyFilter($select, $filter);
         }
 
+        foreach ($this->orders as $order) {
+            $select->order($order);
+        }
+
+        if ($this->pageSize > 0) {
+            $select->limitPage($this->currentPage, $this->pageSize);
+        }
+
         $items = $connection->fetchAll($select);
-        $totals = $this->calculateTotals($items);
+        $totals = $this->fetchTotals($connection, $productkeysTable);
+        $totalRecords = $this->fetchTotalRecords($connection, $productkeysTable);
 
         $this->loadedData = [
-            'totalRecords' => count($items),
+            'totalRecords' => $totalRecords,
             'items' => $items,
             'totals' => [$totals]
         ];
 
         return $this->loadedData;
+    }
+
+    public function setLimit($offset, $size): void
+    {
+        $this->currentPage = max(1, (int)$offset);
+        $this->pageSize = max(0, (int)$size);
+    }
+
+    public function addOrder($field, $direction): void
+    {
+        $direction = strtoupper((string)$direction) === 'DESC' ? 'DESC' : 'ASC';
+        $fieldMap = [
+            'sku' => 'pk.sku',
+            'total_keys' => 'total_keys',
+            'sold_keys' => 'sold_keys',
+            'free_keys' => 'free_keys'
+        ];
+
+        if (!isset($fieldMap[$field])) {
+            return;
+        }
+
+        $this->orders[] = $fieldMap[$field] . ' ' . $direction;
     }
 
     private function applyFilter($select, Filter $filter): void
@@ -125,21 +160,41 @@ class AnalyticsDataProvider extends AbstractDataProvider
         return '%' . $value . '%';
     }
 
-    private function calculateTotals(array $items): array
+    private function fetchTotals($connection, string $productkeysTable): array
     {
-        $totals = [
-            'sku' => (string)__('Total'),
-            'total_keys' => 0,
-            'sold_keys' => 0,
-            'free_keys' => 0
-        ];
+        $totalsSelect = $connection->select()
+            ->from(
+                ['pk' => $productkeysTable],
+                [
+                    'total_keys' => 'COUNT(*)',
+                    'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 0 THEN 1 ELSE 0 END)'
+                ]
+            );
 
-        foreach ($items as $item) {
-            $totals['total_keys'] += (int)($item['total_keys'] ?? 0);
-            $totals['sold_keys'] += (int)($item['sold_keys'] ?? 0);
-            $totals['free_keys'] += (int)($item['free_keys'] ?? 0);
+        foreach ($this->filters as $filter) {
+            $this->applyFilter($totalsSelect, $filter);
         }
 
-        return $totals;
+        $totals = $connection->fetchRow($totalsSelect) ?: [];
+        return [
+            'sku' => (string)__('Total'),
+            'total_keys' => (int)($totals['total_keys'] ?? 0),
+            'sold_keys' => (int)($totals['sold_keys'] ?? 0),
+            'free_keys' => (int)($totals['free_keys'] ?? 0)
+        ];
+    }
+
+    private function fetchTotalRecords($connection, string $productkeysTable): int
+    {
+        $countSelect = $connection->select()
+            ->from(['pk' => $productkeysTable], [])
+            ->columns(['total' => 'COUNT(DISTINCT pk.sku)']);
+
+        foreach ($this->filters as $filter) {
+            $this->applyFilter($countSelect, $filter);
+        }
+
+        return (int)$connection->fetchOne($countSelect);
     }
 }
