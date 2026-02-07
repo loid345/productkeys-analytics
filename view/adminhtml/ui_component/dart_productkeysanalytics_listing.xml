@@ -14,6 +14,9 @@
         <item name="spinner" xsi:type="string">dart_productkeysanalytics_columns</item>
     </argument>
     <dataSource name="dart_productkeysanalytics_listing_data_source">
+        <settings>
+            <showTotals>true</showTotals>
+        </settings>
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Dart\ProductkeysAnalytics\Ui\DataProvider\AnalyticsDataProvider</argument>
             <argument name="name" xsi:type="string">dart_productkeysanalytics_listing_data_source</argument>
