@@ -49,7 +49,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 [
                     'id' => 'MIN(pk.id)',
                     'sku' => 'pk.sku',
-                    'created_at' => 'MIN(pk.created_at)',
+                    'updated_at' => 'MAX(pk.updated_at)',
                     'total_keys' => 'COUNT(*)',
                     'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
                     'free_keys' => 'SUM(CASE WHEN pk.status = 0 THEN 1 ELSE 0 END)'
@@ -120,7 +120,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $fieldMap = [
             'sku' => 'pk.sku',
-            'created_at' => 'pk.created_at',
+            'updated_at' => 'pk.updated_at',
             'fulltext' => 'pk.sku'
         ];
 
@@ -130,7 +130,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $column = $fieldMap[$field];
 
-        if ($field === 'created_at') {
+        if ($field === 'updated_at') {
             if (is_array($value)) {
                 if (!empty($value['from'])) {
                     $select->where($column . ' >= ?', $value['from']);

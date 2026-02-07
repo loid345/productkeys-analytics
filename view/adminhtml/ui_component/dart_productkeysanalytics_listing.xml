@@ -108,9 +108,9 @@
                 <totals>sum</totals>
             </settings>
         </column>
-        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date">
             <settings>
-                <label translate="true">Created At</label>
+                <label translate="true">Updated At</label>
                 <component>Magento_Ui/js/grid/columns/date</component>
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
