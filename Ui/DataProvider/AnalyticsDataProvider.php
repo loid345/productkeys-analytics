@@ -112,7 +112,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $fieldMap = [
             'sku' => 'pk.sku',
-            'period' => 'pk.updated_at',
+            'created_at' => 'pk.created_at',
             'fulltext' => 'pk.sku'
         ];
 
@@ -122,7 +122,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $column = $fieldMap[$field];
 
-        if ($field === 'period') {
+        if ($field === 'created_at') {
             if (is_array($value)) {
                 if (!empty($value['from'])) {
                     $select->where($column . ' >= ?', $value['from']);
