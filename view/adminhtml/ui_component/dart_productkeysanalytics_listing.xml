@@ -25,6 +25,7 @@
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="pageSize" xsi:type="number">20</item>
                     <item name="noDataMessage" xsi:type="string" translate="true">No data found.</item>
+                    <item name="showTotals" xsi:type="boolean">true</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="indexField" xsi:type="string">id</item>
                     </item>
@@ -42,7 +43,7 @@
                     <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
-            <filterRange name="created_at">
+            <filterRange name="created_at" class="Magento\Ui\Component\Listing\Filters\DateRange">
                 <settings>
                     <label translate="true">Created At</label>
                     <dataType>date</dataType>
