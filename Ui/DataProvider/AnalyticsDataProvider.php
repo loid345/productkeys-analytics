@@ -50,9 +50,9 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 ['pk' => $productkeysTable],
                 [
                     'sku' => 'pk.sku',
-                    'total_keys' => 'COUNT(pk.id)',
-                    'sold_keys' => "SUM(CASE WHEN pk.orderinc_id IS NULL OR pk.orderinc_id = '' THEN 0 ELSE 1 END)",
-                    'free_keys' => "SUM(CASE WHEN pk.orderinc_id IS NULL OR pk.orderinc_id = '' THEN 1 ELSE 0 END)"
+                    'total_keys' => 'COUNT(*)',
+                    'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
                 ]
             )
             ->joinLeft(
