@@ -42,18 +42,15 @@
                     <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
-            <filterRange name="created_at">
-                <settings>
-                    <label translate="true">Created At</label>
-                    <dataType>date</dataType>
-                </settings>
-            </filterRange>
         </filters>
         <chips name="chips"/>
         <paging name="listing_paging"/>
         <exportButton name="export_button"/>
     </listingToolbar>
     <columns name="dart_productkeysanalytics_columns">
+        <settings>
+            <showTotals>true</showTotals>
+        </settings>
         <column name="sku">
             <settings>
                 <label translate="true">SKU / Key Pool Name</label>
@@ -81,6 +78,14 @@
                 <label translate="true">Free</label>
                 <filter>text</filter>
                 <totals>sum</totals>
+            </settings>
+        </column>
+        <column name="created_at">
+            <settings>
+                <label translate="true">Created At</label>
+                <dataType>date</dataType>
+                <filter>dateRange</filter>
+                <visible>false</visible>
             </settings>
         </column>
     </columns>
