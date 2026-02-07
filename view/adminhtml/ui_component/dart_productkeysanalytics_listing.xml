@@ -58,25 +58,28 @@
                 <label translate="true">SKU</label>
                 <filter>text</filter>
                 <sorting>asc</sorting>
+                <totalsLabel translate="true">Total</totalsLabel>
             </settings>
         </column>
         <column name="total_keys">
             <settings>
                 <label translate="true">Total Keys</label>
                 <filter>text</filter>
-                <totalsLabel translate="true">Totals</totalsLabel>
+                <totals>sum</totals>
             </settings>
         </column>
         <column name="sold_keys">
             <settings>
                 <label translate="true">Sold</label>
                 <filter>text</filter>
+                <totals>sum</totals>
             </settings>
         </column>
         <column name="free_keys">
             <settings>
                 <label translate="true">Free</label>
                 <filter>text</filter>
+                <totals>sum</totals>
             </settings>
         </column>
     </columns>
