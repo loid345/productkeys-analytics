@@ -25,6 +25,7 @@
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="pageSize" xsi:type="number">20</item>
                     <item name="noDataMessage" xsi:type="string" translate="true">No data found.</item>
+                    <item name="showTotals" xsi:type="boolean">true</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="indexField" xsi:type="string">id</item>
                     </item>
@@ -42,18 +43,15 @@
                     <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
-            <filterRange name="created_at">
-                <settings>
-                    <label translate="true">Created At</label>
-                    <dataType>date</dataType>
-                </settings>
-            </filterRange>
         </filters>
         <chips name="chips"/>
         <paging name="listing_paging"/>
         <exportButton name="export_button"/>
     </listingToolbar>
     <columns name="dart_productkeysanalytics_columns">
+        <settings>
+            <showTotals>true</showTotals>
+        </settings>
         <column name="sku">
             <settings>
                 <label translate="true">SKU / Key Pool Name</label>
@@ -65,6 +63,7 @@
         <column name="total_keys">
             <settings>
                 <label translate="true">Total Keys</label>
+                <dataType>number</dataType>
                 <filter>text</filter>
                 <totals>sum</totals>
             </settings>
@@ -72,6 +71,7 @@
         <column name="sold_keys">
             <settings>
                 <label translate="true">Sold</label>
+                <dataType>number</dataType>
                 <filter>text</filter>
                 <totals>sum</totals>
             </settings>
@@ -79,8 +79,18 @@
         <column name="free_keys">
             <settings>
                 <label translate="true">Free</label>
+                <dataType>number</dataType>
                 <filter>text</filter>
                 <totals>sum</totals>
+            </settings>
+        </column>
+        <column name="created_at">
+            <settings>
+                <label translate="true">Created At</label>
+                <dataType>date</dataType>
+                <filter>dateRange</filter>
+                <filterVisible>true</filterVisible>
+                <visible>false</visible>
             </settings>
         </column>
     </columns>
