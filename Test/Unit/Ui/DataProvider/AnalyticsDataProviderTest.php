@@ -11,7 +11,7 @@ use ReflectionMethod;
 
 class AnalyticsDataProviderTest extends TestCase
 {
-    public function testCalculateTotalsAggregatesCounts(): void
+    public function testEnsureLikeWildcardsAddsWildcardsWhenMissing(): void
     {
         $resourceConnection = $this->createMock(ResourceConnection::class);
         $provider = new AnalyticsDataProvider(
@@ -21,26 +21,12 @@ class AnalyticsDataProviderTest extends TestCase
             $resourceConnection
         );
 
-        $items = [
-            [
-                'total_keys' => '4',
-                'sold_keys' => '1',
-                'free_keys' => '3',
-            ],
-            [
-                'total_keys' => 2,
-                'sold_keys' => 2,
-                'free_keys' => 0,
-            ],
-        ];
-
-        $method = new ReflectionMethod($provider, 'calculateTotals');
+        $method = new ReflectionMethod($provider, 'ensureLikeWildcards');
         $method->setAccessible(true);
-        $totals = $method->invoke($provider, $items);
+        $withWildcards = $method->invoke($provider, 'sku123');
+        $keptWildcards = $method->invoke($provider, '%sku%');
 
-        $this->assertSame('Total', $totals['sku']);
-        $this->assertSame(6, $totals['total_keys']);
-        $this->assertSame(3, $totals['sold_keys']);
-        $this->assertSame(3, $totals['free_keys']);
+        $this->assertSame('%sku123%', $withWildcards);
+        $this->assertSame('%sku%', $keptWildcards);
     }
 }
