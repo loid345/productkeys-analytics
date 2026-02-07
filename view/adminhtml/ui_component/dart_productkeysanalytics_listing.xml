@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <settings>
+        <spinner>dart_productkeysanalytics_columns</spinner>
+        <emptyText translate="true">No records found</emptyText>
+    </settings>
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
