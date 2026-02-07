@@ -71,6 +71,9 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $items = $connection->fetchAll($select);
         $totals = $this->fetchTotals($connection, $productkeysTable);
+        if ($totals) {
+            $items[] = $totals;
+        }
         $totalRecords = $this->fetchTotalRecords($connection, $productkeysTable);
 
         $this->loadedData = [
@@ -111,6 +114,10 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $conditionType = $filter->getConditionType() ?: 'eq';
         $value = $filter->getValue();
 
+        if ($value === null || $value === '' || $value === []) {
+            return;
+        }
+
         $fieldMap = [
             'sku' => 'pk.sku',
             'created_at' => 'pk.created_at',
@@ -141,9 +148,17 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 $select->where($column . ' <= ?', $value);
                 return;
             }
+            if ($conditionType === 'gteq') {
+                $select->where($column . ' >= ?', $value);
+                return;
+            }
+            if ($conditionType === 'lteq') {
+                $select->where($column . ' <= ?', $value);
+                return;
+            }
         }
 
-        if ($conditionType === 'like') {
+        if ($field === 'fulltext' || $conditionType === 'fulltext' || $conditionType === 'like') {
             $select->where($column . ' LIKE ?', $this->ensureLikeWildcards($value));
             return;
         }
@@ -179,6 +194,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $totals = $connection->fetchRow($totalsSelect) ?: [];
         return [
+            'isTotals' => true,
             'sku' => (string)__('Total'),
             'total_keys' => (int)($totals['total_keys'] ?? 0),
             'sold_keys' => (int)($totals['sold_keys'] ?? 0),
