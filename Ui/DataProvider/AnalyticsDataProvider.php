@@ -76,7 +76,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $this->loadedData = [
             'totalRecords' => $totalRecords,
             'items' => $items,
-            'totals' => $totals
+            'totals' => [$totals]
         ];
 
         return $this->loadedData;
@@ -191,6 +191,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $totals = $connection->fetchRow($totalsSelect) ?: [];
         return [
+            'isTotals' => true,
             'sku' => (string)__('Total'),
             'total_keys' => (int)($totals['total_keys'] ?? 0),
             'sold_keys' => (int)($totals['sold_keys'] ?? 0),
