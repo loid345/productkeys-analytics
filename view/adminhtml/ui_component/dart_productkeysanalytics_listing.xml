@@ -21,6 +21,7 @@
                 <item name="config" xsi:type="array">
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="pageSize" xsi:type="number">20</item>
+                    <item name="noDataMessage" xsi:type="string" translate="true">No data found.</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="indexField" xsi:type="string">sku</item>
                     </item>
