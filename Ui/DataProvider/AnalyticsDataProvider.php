@@ -44,6 +44,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
             ->from(
                 ['pk' => $productkeysTable],
                 [
+                    'id' => 'MIN(pk.id)',
                     'sku' => 'pk.sku',
                     'total_keys' => 'COUNT(*)',
                     'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
