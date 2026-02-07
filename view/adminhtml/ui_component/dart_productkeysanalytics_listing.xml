@@ -52,9 +52,6 @@
         <paging name="listing_paging"/>
         <exportButton name="export_button"/>
     </listingToolbar>
-    <listingToolbar name="listing_bottom">
-        <paging name="listing_paging"/>
-    </listingToolbar>
     <columns name="dart_productkeysanalytics_columns">
         <column name="sku">
             <settings>
