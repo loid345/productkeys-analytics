@@ -43,12 +43,6 @@
                     <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
-            <filterRange name="created_at" class="Magento\Ui\Component\Listing\Filters\DateRange">
-                <settings>
-                    <label translate="true">Created At</label>
-                    <dataType>date</dataType>
-                </settings>
-            </filterRange>
         </filters>
         <chips name="chips"/>
         <paging name="listing_paging"/>
@@ -88,6 +82,14 @@
                 <dataType>number</dataType>
                 <filter>text</filter>
                 <totals>sum</totals>
+            </settings>
+        </column>
+        <column name="created_at">
+            <settings>
+                <label translate="true">Created At</label>
+                <dataType>date</dataType>
+                <filter>dateRange</filter>
+                <visible>false</visible>
             </settings>
         </column>
     </columns>
