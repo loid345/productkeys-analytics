@@ -49,6 +49,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 [
                     'id' => 'MIN(pk.id)',
                     'sku' => 'pk.sku',
+                    'created_at' => 'MIN(pk.created_at)',
                     'total_keys' => 'COUNT(*)',
                     'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
                     'free_keys' => 'SUM(CASE WHEN pk.status = 0 THEN 1 ELSE 0 END)'
