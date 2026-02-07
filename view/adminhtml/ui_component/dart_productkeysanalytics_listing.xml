@@ -90,7 +90,7 @@
                 <dataType>date</dataType>
                 <filter>dateRange</filter>
                 <filterVisible>true</filterVisible>
-                <visible>false</visible>
+                <visible>true</visible>
             </settings>
         </column>
     </columns>
