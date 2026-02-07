@@ -38,7 +38,7 @@
         <filters name="listing_filters">
             <filterInput name="sku">
                 <settings>
-                    <label translate="true">SKU</label>
+                    <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
             <filterDateRange name="created_at">
@@ -55,7 +55,7 @@
     <columns name="dart_productkeysanalytics_columns">
         <column name="sku">
             <settings>
-                <label translate="true">SKU</label>
+                <label translate="true">SKU / Key Pool Name</label>
                 <filter>text</filter>
                 <sorting>asc</sorting>
                 <totalsLabel translate="true">Total</totalsLabel>
