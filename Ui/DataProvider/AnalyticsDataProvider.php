@@ -50,9 +50,9 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 ['pk' => $productkeysTable],
                 [
                     'sku' => 'pk.sku',
-                    'total_keys' => 'COUNT(pk.entity_id)',
-                    'sold_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 0 ELSE 1 END)',
-                    'free_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 1 ELSE 0 END)'
+                    'total_keys' => 'COUNT(*)',
+                    'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
                 ]
             )
             ->joinLeft(
@@ -72,7 +72,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
             )
             ->joinLeft(
                 ['so' => $salesOrderTable],
-                'so.entity_id = pk.order_id',
+                'so.increment_id = pk.orderinc_id',
                 []
             )
             ->group(['pk.sku', 'pv.value']);

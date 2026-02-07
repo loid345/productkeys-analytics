@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Dart_ProductkeysAnalytics::analytics" title="Analytics" 
-             module="Dart_ProductkeysAnalytics" 
-             sortOrder="10" action="dart_productkeysanalytics/analytics/index" 
-             parent="Dart_Productkeys::main" resource="Dart_ProductkeysAnalytics::analytics"/>
+        <add id="Dart_ProductkeysAnalytics::analytics" title="Analytics"
+             module="Dart_ProductkeysAnalytics"
+             sortOrder="10" action="dart_productkeysanalytics/analytics/index"
+             parent="Dart_Productkeys::productkeys_title" resource="Dart_ProductkeysAnalytics::analytics"/>
     </menu>
 </config>
