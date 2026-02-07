@@ -43,8 +43,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $productEntityTable = $this->resourceConnection->getTableName('catalog_product_entity');
         $eavAttributeTable = $this->resourceConnection->getTableName('eav_attribute');
         $productVarcharTable = $this->resourceConnection->getTableName('catalog_product_entity_varchar');
-        $salesOrderTable = $this->resourceConnection->getTableName('sales_order');
-
         $select = $connection->select()
             ->from(
                 ['pk' => $productkeysTable],
@@ -69,11 +67,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 ['pv' => $productVarcharTable],
                 'pv.attribute_id = ea.attribute_id AND pv.entity_id = p.entity_id AND pv.store_id = 0',
                 ['product_name' => 'pv.value']
-            )
-            ->joinLeft(
-                ['so' => $salesOrderTable],
-                'so.increment_id = pk.orderinc_id',
-                []
             )
             ->group(['pk.sku', 'pv.value']);
 
@@ -102,7 +95,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $fieldMap = [
             'sku' => 'pk.sku',
             'product_name' => 'pv.value',
-            'order_date' => 'so.created_at'
+            'period' => 'pk.updated_at'
         ];
 
         if (!isset($fieldMap[$field])) {
@@ -111,7 +104,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $column = $fieldMap[$field];
 
-        if ($field === 'order_date') {
+        if ($field === 'period') {
             if ($conditionType === 'from') {
                 $select->where($column . ' >= ?', $value);
                 return;

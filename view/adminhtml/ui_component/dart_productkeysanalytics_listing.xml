@@ -44,10 +44,10 @@
                     <label translate="true">Product Name</label>
                 </settings>
             </filterInput>
-            <filterDateRange name="order_date">
+            <filterDateRange name="period">
                 <settings>
-                    <dataScope>order_date</dataScope>
-                    <label translate="true">Order Date</label>
+                    <dataScope>period</dataScope>
+                    <label translate="true">Period (Key Updated At)</label>
                 </settings>
             </filterDateRange>
         </filters>
