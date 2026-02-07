@@ -49,15 +49,7 @@
             </filterDateRange>
         </filters>
         <chips name="chips"/>
-        <paging name="listing_paging">
-            <settings>
-                <options>
-                    <option name="20" xsi:type="number">20</option>
-                    <option name="50" xsi:type="number">50</option>
-                    <option name="100" xsi:type="number">100</option>
-                </options>
-            </settings>
-        </paging>
+        <paging name="listing_paging"/>
         <exportButton name="export_button"/>
     </listingToolbar>
     <listingToolbar name="listing_bottom">
