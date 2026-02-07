@@ -45,6 +45,7 @@
                 <settings>
                     <dataScope>created_at</dataScope>
                     <label translate="true">Created At</label>
+                    <dataType>date</dataType>
                 </settings>
             </filterDateRange>
         </filters>

@@ -75,7 +75,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $this->loadedData = [
             'totalRecords' => $totalRecords,
             'items' => $items,
-            'totals' => [$totals]
+            'totals' => $totals
         ];
 
         return $this->loadedData;
