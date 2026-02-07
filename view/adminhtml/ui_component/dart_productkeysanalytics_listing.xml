@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
-<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
     <settings>
         <spinner>dart_productkeysanalytics_columns</spinner>
         <emptyText translate="true">No records found</emptyText>
     </settings>
     <argument name="data" xsi:type="array">
+        <item name="component" xsi:type="string">Magento_Ui/js/grid/listing</item>
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
             <item name="deps" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
@@ -15,15 +16,16 @@
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Dart\ProductkeysAnalytics\Ui\DataProvider\AnalyticsDataProvider</argument>
             <argument name="name" xsi:type="string">dart_productkeysanalytics_listing_data_source</argument>
-            <argument name="primaryFieldName" xsi:type="string">sku</argument>
-            <argument name="requestFieldName" xsi:type="string">sku</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="pageSize" xsi:type="number">20</item>
                     <item name="noDataMessage" xsi:type="string" translate="true">No data found.</item>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="indexField" xsi:type="string">sku</item>
+                        <item name="indexField" xsi:type="string">id</item>
                     </item>
                 </item>
             </argument>
