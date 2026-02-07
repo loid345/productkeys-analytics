@@ -3,6 +3,7 @@
     <settings>
         <spinner>dart_productkeysanalytics_columns</spinner>
         <emptyText translate="true">No records found</emptyText>
+        <showTotals>true</showTotals>
     </settings>
     <argument name="data" xsi:type="array">
         <item name="component" xsi:type="string">Magento_Ui/js/grid/listing</item>
@@ -38,15 +39,15 @@
         <filters name="listing_filters">
             <filterInput name="sku">
                 <settings>
-                    <label translate="true">SKU</label>
+                    <label translate="true">SKU / Key Pool Name</label>
                 </settings>
             </filterInput>
-            <filterDateRange name="period">
+            <filterRange name="created_at">
                 <settings>
-                    <dataScope>period</dataScope>
-                    <label translate="true">Period (Key Updated At)</label>
+                    <label translate="true">Created At</label>
+                    <dataType>date</dataType>
                 </settings>
-            </filterDateRange>
+            </filterRange>
         </filters>
         <chips name="chips"/>
         <paging name="listing_paging"/>
@@ -55,28 +56,31 @@
     <columns name="dart_productkeysanalytics_columns">
         <column name="sku">
             <settings>
-                <label translate="true">SKU</label>
+                <label translate="true">SKU / Key Pool Name</label>
                 <filter>text</filter>
                 <sorting>asc</sorting>
+                <totalsLabel translate="true">Total</totalsLabel>
             </settings>
         </column>
         <column name="total_keys">
             <settings>
                 <label translate="true">Total Keys</label>
                 <filter>text</filter>
-                <totalsLabel translate="true">Totals</totalsLabel>
+                <totals>sum</totals>
             </settings>
         </column>
         <column name="sold_keys">
             <settings>
                 <label translate="true">Sold</label>
                 <filter>text</filter>
+                <totals>sum</totals>
             </settings>
         </column>
         <column name="free_keys">
             <settings>
                 <label translate="true">Free</label>
                 <filter>text</filter>
+                <totals>sum</totals>
             </settings>
         </column>
     </columns>
