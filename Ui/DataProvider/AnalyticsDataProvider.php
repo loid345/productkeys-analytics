@@ -141,6 +141,14 @@ class AnalyticsDataProvider extends AbstractDataProvider
                 $select->where($column . ' <= ?', $value);
                 return;
             }
+            if ($conditionType === 'gteq') {
+                $select->where($column . ' >= ?', $value);
+                return;
+            }
+            if ($conditionType === 'lteq') {
+                $select->where($column . ' <= ?', $value);
+                return;
+            }
         }
 
         if ($conditionType === 'like') {
