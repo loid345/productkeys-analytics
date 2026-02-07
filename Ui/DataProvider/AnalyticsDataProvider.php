@@ -40,42 +40,17 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $connection = $this->resourceConnection->getConnection();
         $productkeysTable = $this->resourceConnection->getTableName('dart_productkeys');
-        $productEntityTable = $this->resourceConnection->getTableName('catalog_product_entity');
-        $eavAttributeTable = $this->resourceConnection->getTableName('eav_attribute');
-        $productVarcharTable = $this->resourceConnection->getTableName('catalog_product_entity_varchar');
-        $salesOrderTable = $this->resourceConnection->getTableName('sales_order');
-
         $select = $connection->select()
             ->from(
                 ['pk' => $productkeysTable],
                 [
                     'sku' => 'pk.sku',
-                    'total_keys' => 'COUNT(pk.entity_id)',
-                    'sold_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 0 ELSE 1 END)',
-                    'free_keys' => 'SUM(CASE WHEN pk.order_id IS NULL THEN 1 ELSE 0 END)'
+                    'total_keys' => 'COUNT(*)',
+                    'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
                 ]
             )
-            ->joinLeft(
-                ['p' => $productEntityTable],
-                'p.sku = pk.sku',
-                []
-            )
-            ->joinLeft(
-                ['ea' => $eavAttributeTable],
-                "ea.attribute_code = 'name' AND ea.entity_type_id = p.entity_type_id",
-                []
-            )
-            ->joinLeft(
-                ['pv' => $productVarcharTable],
-                'pv.attribute_id = ea.attribute_id AND pv.entity_id = p.entity_id AND pv.store_id = 0',
-                ['product_name' => 'pv.value']
-            )
-            ->joinLeft(
-                ['so' => $salesOrderTable],
-                'so.entity_id = pk.order_id',
-                []
-            )
-            ->group(['pk.sku', 'pv.value']);
+            ->group(['pk.sku']);
 
         foreach ($this->filters as $filter) {
             $this->applyFilter($select, $filter);
@@ -101,8 +76,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $fieldMap = [
             'sku' => 'pk.sku',
-            'product_name' => 'pv.value',
-            'order_date' => 'so.created_at'
+            'period' => 'pk.updated_at'
         ];
 
         if (!isset($fieldMap[$field])) {
@@ -111,7 +85,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $column = $fieldMap[$field];
 
-        if ($field === 'order_date') {
+        if ($field === 'period') {
             if ($conditionType === 'from') {
                 $select->where($column . ' >= ?', $value);
                 return;
@@ -134,7 +108,6 @@ class AnalyticsDataProvider extends AbstractDataProvider
     {
         $totals = [
             'sku' => (string)__('Total'),
-            'product_name' => '',
             'total_keys' => 0,
             'sold_keys' => 0,
             'free_keys' => 0

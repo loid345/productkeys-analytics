@@ -17,6 +17,7 @@
                 <item name="config" xsi:type="array">
                     <item name="update_url" xsi:type="url" path="mui/index/render"/>
                     <item name="pageSize" xsi:type="number">20</item>
+                    <item name="noDataMessage" xsi:type="string" translate="true">No data found.</item>
                     <item name="storageConfig" xsi:type="array">
                         <item name="indexField" xsi:type="string">sku</item>
                     </item>
@@ -34,15 +35,10 @@
                     <label translate="true">SKU</label>
                 </settings>
             </filterInput>
-            <filterInput name="product_name">
+            <filterDateRange name="period">
                 <settings>
-                    <label translate="true">Product Name</label>
-                </settings>
-            </filterInput>
-            <filterDateRange name="order_date">
-                <settings>
-                    <dataScope>order_date</dataScope>
-                    <label translate="true">Order Date</label>
+                    <dataScope>period</dataScope>
+                    <label translate="true">Period (Key Updated At)</label>
                 </settings>
             </filterDateRange>
         </filters>
@@ -67,12 +63,6 @@
                 <label translate="true">SKU</label>
                 <filter>text</filter>
                 <sorting>asc</sorting>
-            </settings>
-        </column>
-        <column name="product_name">
-            <settings>
-                <label translate="true">Product Name</label>
-                <filter>text</filter>
             </settings>
         </column>
         <column name="total_keys">
