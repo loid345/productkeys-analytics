@@ -41,10 +41,10 @@
                     <label translate="true">SKU</label>
                 </settings>
             </filterInput>
-            <filterDateRange name="period">
+            <filterDateRange name="created_at">
                 <settings>
-                    <dataScope>period</dataScope>
-                    <label translate="true">Period (Key Updated At)</label>
+                    <dataScope>created_at</dataScope>
+                    <label translate="true">Created At</label>
                 </settings>
             </filterDateRange>
         </filters>
