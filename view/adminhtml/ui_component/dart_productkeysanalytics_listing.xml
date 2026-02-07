@@ -5,6 +5,7 @@
         <emptyText translate="true">No records found</emptyText>
     </settings>
     <argument name="data" xsi:type="array">
+        <item name="component" xsi:type="string">Magento_Ui/js/grid/listing</item>
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
             <item name="deps" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
