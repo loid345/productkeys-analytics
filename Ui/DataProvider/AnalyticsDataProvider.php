@@ -40,6 +40,7 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $connection = $this->resourceConnection->getConnection();
         $productkeysTable = $this->resourceConnection->getTableName('dart_productkeys');
+        $orderTable = $this->resourceConnection->getTableName('sales_order');
         $select = $connection->select()
             ->from(
                 ['pk' => $productkeysTable],
@@ -47,8 +48,13 @@ class AnalyticsDataProvider extends AbstractDataProvider
                     'sku' => 'pk.sku',
                     'total_keys' => 'COUNT(*)',
                     'sold_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 1 ELSE 0 END)',
-                    'free_keys' => 'SUM(CASE WHEN pk.status = 1 THEN 0 ELSE 1 END)'
+                    'free_keys' => 'SUM(CASE WHEN pk.status = 0 THEN 1 ELSE 0 END)'
                 ]
+            )
+            ->joinLeft(
+                ['so' => $orderTable],
+                'so.increment_id = pk.orderinc_id',
+                []
             )
             ->group(['pk.sku']);
 
@@ -76,7 +82,8 @@ class AnalyticsDataProvider extends AbstractDataProvider
 
         $fieldMap = [
             'sku' => 'pk.sku',
-            'period' => 'pk.updated_at'
+            'period' => 'so.created_at',
+            'fulltext' => 'pk.sku'
         ];
 
         if (!isset($fieldMap[$field])) {
@@ -86,6 +93,15 @@ class AnalyticsDataProvider extends AbstractDataProvider
         $column = $fieldMap[$field];
 
         if ($field === 'period') {
+            if (is_array($value)) {
+                if (!empty($value['from'])) {
+                    $select->where($column . ' >= ?', $value['from']);
+                }
+                if (!empty($value['to'])) {
+                    $select->where($column . ' <= ?', $value['to']);
+                }
+                return;
+            }
             if ($conditionType === 'from') {
                 $select->where($column . ' >= ?', $value);
                 return;
@@ -97,11 +113,21 @@ class AnalyticsDataProvider extends AbstractDataProvider
         }
 
         if ($conditionType === 'like') {
-            $select->where($column . ' LIKE ?', $value);
+            $select->where($column . ' LIKE ?', $this->ensureLikeWildcards($value));
             return;
         }
 
         $select->where($column . ' = ?', $value);
+    }
+
+    private function ensureLikeWildcards($value): string
+    {
+        $value = (string)$value;
+        if (str_contains($value, '%')) {
+            return $value;
+        }
+
+        return '%' . $value . '%';
     }
 
     private function calculateTotals(array $items): array
