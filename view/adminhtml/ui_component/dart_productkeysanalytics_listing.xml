@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Ui/etc/ui_configuration.xsd">
-    <settings>
-        <spinner>dart_productkeysanalytics_columns</spinner>
-        <emptyText translate="true">No records found</emptyText>
-        <showTotals>true</showTotals>
-    </settings>
     <argument name="data" xsi:type="array">
-        <item name="component" xsi:type="string">Magento_Ui/js/grid/listing</item>
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
             <item name="deps" xsi:type="string">dart_productkeysanalytics_listing.dart_productkeysanalytics_listing_data_source</item>
@@ -36,7 +30,13 @@
             </argument>
         </argument>
     </dataSource>
-    <listingToolbar name="listing_top">
+    <container name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+                <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
+            </item>
+        </argument>
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <filterSearch name="fulltext"/>
@@ -71,7 +71,7 @@
         <chips name="chips"/>
         <paging name="listing_paging"/>
         <exportButton name="export_button"/>
-    </listingToolbar>
+    </container>
     <columns name="dart_productkeysanalytics_columns">
         <settings>
             <showTotals>true</showTotals>
