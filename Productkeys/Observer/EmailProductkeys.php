@@ -137,7 +137,7 @@ class EmailProductkeys implements ObserverInterface
                         $issuedKeysCount = 0;
                         for ($i=0; $i<$overall_qty; $i++)
                         {
-                            if (!array_key_exists($i, $collection) || count($collection) < $order->getTotalQtyOrdered())
+                            if (!array_key_exists($i, $collection) || count($collection) < $overall_qty)
                             {
                                 $productkeyvalues = $this->generateKeys->saveOrderToProductkeys($orderIncId, $keypool, $product, $storeId);
 
